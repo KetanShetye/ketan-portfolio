@@ -1,0 +1,82 @@
+name: 🚀 Deploy Portfolio to Docker
+
+on:
+  push:
+    branches:
+      - main  # only runs when PR is merged to main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🟢 Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 📦 Install dependencies
+        run: npm install
+
+      - name: 🔨 Build the app
+        run: npm run build
+
+      - name: 🐳 Docker build
+        run: docker build -t ketan-portfolio .
+
+      # Optional: Deploy step (we’ll add Render or another free host later)
+
+
+
+# name: 🚀 Deploy Portfolio to Docker
+# This is just the name of your workflow. It will appear like a title on the GitHub Actions tab when it runs.
+
+# 🕒 on: push → branches: main
+# This workflow will run only when code is pushed to the main branch
+
+# 🛠 jobs → build-and-deploy
+# This defines the main job you want GitHub to run.
+# You can name this job anything — "build", "ci", "deploy", etc.
+
+# 🧱 runs-on: ubuntu-latest
+# runs-on: ubuntu-latest
+# This tells GitHub to run the workflow in a Linux-based virtual machine
+# (you can also use windows-latest or macos-latest, but ubuntu is fastest and free)
+
+
+# ✅ steps:
+# Everything inside steps is done in sequence — like a to-do list.
+
+
+# 1️⃣ Checkout Code
+# - name: ⬇️ Checkout code
+#   uses: actions/checkout@v3
+# This pulls your GitHub repo's code into the CI server.
+# Without this step, GitHub Actions won’t have access to your files.
+
+
+# 2️⃣ Setup Node.js
+# - name: 🟢 Set up Node.js
+#   uses: actions/setup-node@v3
+#   with:
+#     node-version: 18
+# This sets up Node.js (version 18) in the environment — required for your React + Vite app to build.
+
+# 3️⃣ Install Dependencies
+# - name: 📦 Install dependencies
+#   run: npm install
+# Runs npm install to install everything from package.json — React, Vite, etc.
+
+# 4️⃣ Build the App
+# - name: 🔨 Build the app
+#   run: npm run build
+# Runs the build command (vite build) and creates your optimized dist/ folder.
+
+# 5️⃣ Docker Build
+# - name: 🐳 Docker build
+#   run: docker build -t ketan-portfolio .
+# This builds your Docker image from the Dockerfile you wrote.
+# -t ketan-portfolio just names your image.
